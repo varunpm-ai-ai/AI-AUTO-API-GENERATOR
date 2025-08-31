@@ -51,6 +51,14 @@ cd client
 npm install
 npm start
 
+Screen shots
+![Main](./screenshots/image.png)
+![Workspace](./screenshots/image-1.png)
+![API Types](./screenshots/image-2.png)
+![Operetion types](./screenshots/image-3.png)
+![Custom Endpoints](./screenshots/image-4.png)
+![History](./screenshots/image-5.png)
+
  API Routes
 Workspace
 POST /api/generate → Generate new API
