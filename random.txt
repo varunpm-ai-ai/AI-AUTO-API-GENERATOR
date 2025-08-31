@@ -1,0 +1,240 @@
+  // const [message, setMessage] = useState("");
+  //   useEffect(() => {
+  //   fetch("http://localhost:5000/")  
+  //     .then((res) => res.text())
+  //     .then((data) => setMessage(data))
+  //     .catch((err) => console.error("Error connecting to backend:", err));
+  // }, []);
+111827
+1F2937
+374151
+
+// Features 
+1.Type of API to generate
+
+2.Select the opereaton type 
+CRUD 
+C → Create → POST
+
+R → Read → GET
+
+U → Update → PUT/PATCH
+
+D → Delete → DELETE
+
+3. end point customisation 
+let ai deside or custom 
+
+4.history 
+generated history 
+
+import React from 'react'
+
+const Workspace = () => {
+  return (
+    <div className="relative h-full bg-gradient-to-r from-[#0b1120] to-[#1a2130]">
+      {/* Vertical line at 1/4th of screen */}
+      <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gray-600"></div>
+
+      {/* Workspace Content */}
+      <div className="p-6 text-gray-200">
+        <h1 className="text-xl font-bold">Workspace Content</h1>
+      </div>
+    </div>
+  )
+}
+
+export default Workspace
+
+
+import React from "react";
+
+const Workspace = () => {
+  return (
+    <aside className="relative w-1/4 h-[calc(100vh-64px)] mt-[64px] bg-gradient-to-b from-[#0b1120] to-[#1a2130] text-gray-200 flex flex-col border-r border-gray-700">
+      
+      {/* Sidebar navbar (mini navbar inside sidebar) */}
+      <div className="w-full h-12 flex items-center justify-between px-4 bg-[#1a2130] border-b border-gray-700">
+        <span className="text-gray-200 font-semibold">Sidebar Nav</span>
+        <button className="text-gray-400 hover:text-white">⚙️</button>
+      </div>
+
+      {/* Sidebar content */}
+      <div className="flex-1 p-4">
+        Sidebar content goes here...
+      </div>
+    </aside>
+  );
+};
+
+export default Workspace;
+
+
+    <nav className="w-full flex items-center justify-between px-8 py-4 sm:px-2 sm:py-2
+     bg-gradient-to-r from-[#0b1120] to-[#1a2130] shadow-md 
+      border-b border-gray-700 ">
+      {/* Left Section */}
+      {/* Nav Links */}
+      <div className="flex items-center space-x-6 text-gray-200 font-medium">
+        {/* Hambarger icon */}
+        <div className="text-gray cursor-pointer">
+          <Bars3Icon className="h-7 w-7" />
+        </div>
+        <a href="#" className="hover:text-gray-400 transition">
+          HOME
+        </a>
+        <a href="#" className="hover:text-gray-400 transition">
+          WORKSPACE
+        </a>
+        <a href="#" className="hover:text-gray-400 transition">
+          TEST YOUR APIs
+        </a>
+      </div>
+
+      {/* Search bar */}
+      <div className="flex items-center bg-[#222c3d] rounded-full px-3 py-1 w-1/3">
+        <Search className="w-4 h-4 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Search your APIs..."
+          className="ml-2 w-full bg-transparent outline-none text-gray-300 placeholder-gray-500"
+        />
+      </div>
+
+      {/* Right section */}
+      <div className="flex items-center space-x-4 text-gray-300">
+        <Settings className="w-5 h-5 cursor-pointer hover:text-gray-500 transition" />
+        <Bell className="w-5 h-5 cursor-pointer hover:text-gray-500 transition" />
+        <User className="w-5 h-5 cursor-pointer hover:text-gray-500 transition" />
+        <button className=" flex gap-2 ml-2 px-3 py-1 rounded-lg bg-[#374151] border border-[#374151] text-white hover:bg-purple-500 hover:text-gray-300 transition">
+          <span>Export</span>
+          <FileDown className="w-5 h-5 mt-0.5" />
+        </button>
+      </div>
+    </nav>
+
+
+        // <div>
+    //   {isAPITypes && (
+    //     <TypesofAPI/>
+    //   )}
+    //   {isOperations && (
+    //     <Operations/>
+    //   )}
+    //   {Endpoints && (
+    //     <CustomEndpoints/>
+    //   )}
+    //   {isHistory && (
+    //     <History/>
+    //   )}
+    // </div>
+
+
+    {/* Body part */}
+              <h1 className="flex justify-center ">Select API Types</h1>
+              <h3 className="text-sm flex justify-center mt-2">
+                Select any one at a time**{" "}
+              </h3>
+
+              {/* Selectors */}
+              <div className="m-4 mt-10 space-y-3">
+                {/* Rest API */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="radio" name="Rest" id="Rest API" />
+                  <span>Rest API</span>
+                </div>
+
+                {/* Auth API */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="radio" name="Rest" id="Auth API" />
+                  <span>Auth API</span>
+                </div>
+
+                {/* GraphQL API */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="radio" name="Rest" id="GraphQL" />
+                  <span>GraphQL</span>
+                </div>
+
+                {/* AI/ML API */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="radio" name="Rest" id="AI/ML API" />
+                  <span>AI/ML API</span>
+                </div>
+
+                {/* 3rd Party API */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="radio" name="Rest" id="3rd Party API" />
+                  <span>3rd Party API</span>
+                </div>
+              </div>
+
+
+              {/* Body part */}
+              <h1 className="flex justify-center ">Select Operation Types</h1>
+              {/* <h3 className="text-sm flex justify-center mt-2" >Select any one at a time** </h3> */}
+
+              {/* Selectors */}
+              <div className="m-4 mt-10 space-y-2">
+                {/* GET */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="checkbox" name="GET" id="GET" />
+                  <span>GET</span>
+                </div>
+
+                {/* PUT */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="checkbox" name="PUT" id="PUT" />
+                  <span>PUT</span>
+                </div>
+
+                {/* POST */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="checkbox" name="POST" id="POST" />
+                  <span>POST</span>
+                </div>
+
+                {/* PATCH */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="checkbox" name="PATCH" id="PATCH" />
+                  <span>PATCH</span>
+                </div>
+
+                {/* DELETE */}
+                <div className="space-x-2 text-gray-300 hover:text-gray-400 cursor-pointer">
+                  <input type="checkbox" name="DELETE" id="DELETE" />
+                  <span>DELETE</span>
+                </div>
+              </div>
+
+              
+
+              {/* preview section */}
+      {/* <div className="bg-[#364663] mt-5 rounded-xl w-xl h-80 max-h-80 overflow-y-auto">
+        <span className="flex mx-4 p-4">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus enim,
+          voluptatibus sint fugit officia suscipit porro eveniet repudiandae in
+          unde dignissimos quaerat aperiam ipsum incidunt exercitationem hic
+          veritatis dolorem id!
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus enim,
+          voluptatibus sint fugit officia suscipit porro eveniet repudiandae in
+          unde dignissimos quaerat aperiam ipsum incidunt exercitationem hic
+          veritatis dolorem id!
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus enim,
+          voluptatibus sint fugit officia suscipit porro eveniet repudiandae in
+          unde dignissimos quaerat aperiam ipsum incidunt exercitationem hic
+          veritatis dolorem id!
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus enim,
+          voluptatibus sint fugit officia suscipit porro eveniet repudiandae in
+          unde dignissimos quaerat aperiam ipsum incidunt exercitationem hic
+          veritatis dolorem id!
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus enim,
+          voluptatibus sint fugit officia suscipit porro eveniet repudiandae in
+          unde dignissimos quaerat aperiam ipsum incidunt exercitationem hic
+          veritatis dolorem id!
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus enim,
+          voluptatibus sint fugit officia suscipit porro eveniet repudiandae in
+          unde dignissimos quaerat aperiam ipsum incidunt exercitationem hic
+          veritatis dolorem id!
+        </span>
+      </div> */}

@@ -1,0 +1,95 @@
+const OpenAI = require("openai");
+const Api = require("../models/ApiSpec");
+const History = require('../models/History');
+
+require("dotenv").config();
+
+// Open ai api key
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
+
+// Generate a new api 
+exports.generateAPI = async (req, res) => {
+    try {
+        const { name, type, operations, endpoints, customOptions, code, prompt } = req.body || {};
+
+        // Open ai prompt 
+        const fullPrompt = `
+        You are an API generator.
+        Type: ${type || "REST"}
+        Operations: ${operations?.join(", ") || "GET"}
+        Endpoints: ${JSON.stringify(endpoints || [{ path: "/", method: "GET" }])}
+        Options: ${JSON.stringify(customOptions || {})}
+        User Request: ${prompt}
+        Generate production-ready Node.js Express code for this API.
+        `;
+
+        // Call OpenAI
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini", // or "gpt-4.1" depending on your plan
+            messages: [{ role: "user", content: fullPrompt }]
+        });
+
+        const generatedCode = response.choices[0].message.content;
+
+        // Save the API
+        const newApi = new Api({
+            name: name || prompt?.slice(0, 30) || "Generated API",
+            type: type || "REST",
+            operations: operations || ["GET"],
+            endpoints: endpoints || [{ path: "/", method: "GET", description: "Default endpoint" }],
+            customOptions,
+            code: generatedCode || code
+        })
+        await newApi.save();
+
+        
+
+        // Save the history
+        const HistoryEntry = new History({
+            apiId: newApi._id,
+            prompt,
+            optionsUsed: { type, operations, endpoints, customOptions },
+        })
+        await HistoryEntry.save();
+
+        res.status(200).json({ api: newApi, history: HistoryEntry });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error generating api" });
+    };
+};
+
+// Get all APIs (Workspace)
+exports.getAllApis = async (req, res) => {
+    try {
+        const apis = await ApiSchema.find().sort({ createdAt: -1 });
+        res.json(apis);
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching workspace APIs" });
+    }
+};
+
+// Get single API by ID
+exports.getApiById = async (req, res) => {
+    try {
+        const api = await ApiSchema.findById(req.params.id);
+        if (!api) return res.status(404).json({ error: "API not found" });
+        res.json(api);
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching API" });
+    }
+};
+
+// Create new API (manual save)
+exports.createApi = async (req, res) => {
+  try {
+    const { name, type, operations, endpoints, customOptions, code } = req.body;
+    const newApi = new Api({ name, type, operations, endpoints, customOptions, code });
+    await newApi.save();
+    res.status(201).json(newApi);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
