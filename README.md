@@ -52,8 +52,7 @@ npm install
 npm start
 
 Screen shots
-<img width="1902" height="934" alt="Screenshot 2025-08-31 105824" src="https://github.com/user-attachments/assets/bb06bdc1-700f-4d66-a8e6-cca5f002c900" />
-<img width="1902" height="904" alt="Screenshot 2025-08-31 120555" src="https://github.com/user-attachments/assets/3bf27d7b-654e-4253-abb0-fb5075e12281" />
+
 
 
 
