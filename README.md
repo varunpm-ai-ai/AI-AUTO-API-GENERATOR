@@ -51,8 +51,6 @@ cd client
 npm install
 npm start
 
-Screen shots
-
 
 
 
