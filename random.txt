@@ -238,3 +238,41 @@ export default Workspace;
           veritatis dolorem id!
         </span>
       </div> */}
+
+
+
+      {items.length > 0 &&
+                  items.map((item, i) => (
+                    <li
+                      key={i}
+                      onClick={() => setPreviewText(item.code)}
+                      className="p-2 rounded-md pr-20 bg-gray-600 hover:bg-gray-700"
+                    >
+                      {/* {item.name || "Unnamed API"} */}
+                      Sample API
+                    </li>
+                  ))}
+
+
+
+
+                  <ul className="cursor-pointer space-y-2 m-5 overflow-auto">
+                {workspaceItems.length > 0 &&
+                  workspaceItems.map((item, i) => {
+                    <li
+                      key={i}
+                      onClick={() => setPreviewText(item.code)}
+                      className="p-2 rounded-md bg-gray-600 hover:bg-gray-700 flex justify-between"
+                    >
+                      <span>{item.name || "Unnamed API"}</span>
+                      <div className="flex space-x-2">
+                        <button className="bg-blue-400 rounded-md px-1 hover:bg-blue-300">
+                          Update
+                        </button>
+                        <button className="bg-blue-400 rounded-md px-1 hover:bg-blue-300">
+                          Delete
+                        </button>
+                      </div>
+                    </li>;
+                  })}
+              </ul>

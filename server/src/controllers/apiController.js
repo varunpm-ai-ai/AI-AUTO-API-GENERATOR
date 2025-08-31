@@ -1,6 +1,8 @@
 const OpenAI = require("openai");
 const Api = require("../models/ApiSpec");
 const History = require('../models/History');
+const path = require("path");
+const fs = require("fs");
 
 require("dotenv").config();
 
@@ -44,7 +46,7 @@ exports.generateAPI = async (req, res) => {
         })
         await newApi.save();
 
-        
+
 
         // Save the history
         const HistoryEntry = new History({
@@ -84,12 +86,68 @@ exports.getApiById = async (req, res) => {
 
 // Create new API (manual save)
 exports.createApi = async (req, res) => {
+    try {
+        const { name, type, operations, endpoints, customOptions, code } = req.body;
+        const newApi = new Api({ name, type, operations, endpoints, customOptions, code });
+        await newApi.save();
+        res.status(201).json(newApi);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// Update the API
+exports.updateApi = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedApi = await Api.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updatedApi) return res.status(400).json({ error: "API not found " });
+        res.json(updatedApi);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error Updating API " })
+    }
+};
+
+// Delete the API
+exports.deleteApi = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await Api.findByIdAndDelete(id);
+        if (!deleted) return res.status(404).json({ error: "API not found" });
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: "Error deleting API" });
+    }
+};
+
+//Export the API
+exports.exportApi = async (req, res) => {
   try {
-    const { name, type, operations, endpoints, customOptions, code } = req.body;
-    const newApi = new Api({ name, type, operations, endpoints, customOptions, code });
-    await newApi.save();
-    res.status(201).json(newApi);
+    const api = await Api.findById(req.params.id);
+    if (!api) return res.status(404).json({ error: "API not found" });
+
+    const fileName = `${api.name.replace(/\s+/g, "_")}.js`;
+    const filePath = path.join(__dirname, "../../tmp", fileName);
+
+    fs.writeFileSync(filePath, api.code, "utf8");
+
+    res.download(filePath, fileName, (err) => {
+      if (err) console.error(err);
+      fs.unlinkSync(filePath); // cleanup temp file
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Error exporting API" });
+  }
+};
+
+//Search the APIs
+exports.searchApis = async (req, res) => {
+  try {
+    const regex = new RegExp(req.params.query, "i"); // case-insensitive
+    const results = await Api.find({ name: { $regex: regex } });
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: "Error searching APIs" });
   }
 };

@@ -78,7 +78,19 @@ const Navbar = () => {
             </div>
 
             <div className="bg-gray-600 hover:bg-gray-500 rounded-md p-0.5 flex ">
-              <button type="button" className="flex gap-1 px-2 py-2">
+              <button
+                onClick={() => {
+                  if (!selectedApiId) {
+                    alert("Please select an API from workspace first!");
+                    return;
+                  }
+                  window.open(
+                    `http://localhost:3000/api/export/${selectedApiId}`
+                  );
+                }}
+                type="button"
+                className="flex gap-1 px-2 py-2"
+              >
                 <FileUp />
                 Export
               </button>
