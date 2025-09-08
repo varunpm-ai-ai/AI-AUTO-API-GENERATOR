@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Sparkles, Zap } from "lucide-react";
 
-const Mainbar = ({ 
+const Mainbar = ({
   previewText,
-  setPreviewText, 
+  setPreviewText,
   onApiGenerated,
   selectedType,
   selectedOps,
   customEndpoints,
-  aiDecide
+  aiDecide,
 }) => {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,34 +26,56 @@ const Mainbar = ({
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return alert("Please enter a prompt!");
-    URL = "http://localhost:3000/api/generate";
+    const URL = "http://localhost:3000/api/generate";
 
     setLoading(true);
+
     try {
-      const res = fetch(URL, {
+      // Map frontend type to backend enum
+      const typeMap = {
+        "Rest API": "REST",
+        "Auth API": "Auth",
+        "GraphQL API": "GraphQL",
+        "AI/ML API": "AI/ML",
+        "3rd Party API": "3rd Party",
+      };
+      const validOps = ["GET", "POST", "PUT", "PATCH", "DELETE"];
+      const filteredOps = selectedOps.filter((op) =>
+        validOps.includes(op.toUpperCase())
+      );
+
+      // Prepare payload
+      const payload = {
+        prompt,
+        type: typeMap[selectedType] || "REST", // ensure valid enum
+        operations: filteredOps,
+        endpoints: aiDecide
+          ? [{ path: "/", method: "GET", description: "AI decided" }]
+          : customEndpoints.map((e) => ({ path: e, method: "GET" })),
+        customOptions: {},
+      };
+
+      const res = await fetch(URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt,
-          type: selectedType,
-          operations: selectedOps,
-          endpoints: aiDecide
-            ? [{ path: "/", method: "GET", description: "AI decided" }]
-            : customEndpoints.map((e) => ({ path: e, method: "GET" })),
-          customOptions: {},
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
+      console.log("API response:", data); // log for debugging
 
-      if (data.api?.code) {
-        setPreviewText(data.api.code);
-        if (onApiGenerated) {
-          onApiGenerated(data.api, data.history);
-        }
+      // Safely set preview
+      if (data.api?.code || data.code) {
+        const codeString = data.api?.code ?? data.code;
+        setPreviewText(codeString); // update parent state if provided
+        setLocalPreview(codeString); // local state ensures immediate rendering
+        if (onApiGenerated) onApiGenerated(data.api, data.history);
+      } else if (data.error) {
+        alert(`Error generating API: ${data.error}`);
       }
     } catch (error) {
-      console.error("Error generating API:", err);
+      console.error("Error generating API:", error);
+      alert("Error generating API. Check console for details.");
     } finally {
       setLoading(false);
     }
@@ -89,8 +111,8 @@ const Mainbar = ({
 
       {/* preview section */}
       <div
-        className="bg-[#364663] mt-5 rounded-xl w-60 sm:w-60 md:w-md lg:w-xl
-       ml-3 sm:ml-3 md:ml-0 lg:ml-0 h-80 max-h-80 overflow-y-auto relative"
+        className="bg-[#364663] mt-5 rounded-xl w-60 sm:w-80 md:w-96 lg:w-[40rem]
+        ml-3 h-80 max-h-80 overflow-y-auto relative"
       >
         <button
           onClick={handleCopy}
@@ -98,7 +120,9 @@ const Mainbar = ({
         >
           Copy
         </button>
-        <pre className="flex mx-1 my-6 p-4">{previewText}</pre>
+        <pre className="whitespace-pre-wrap break-words p-4 text-gray-300">
+          {previewText}
+        </pre>
       </div>
     </div>
   );

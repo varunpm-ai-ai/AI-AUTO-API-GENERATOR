@@ -7,13 +7,13 @@ const ApiSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["REST", "Auth", "GraphQL", "AI/ML", "3rd Party"],
+    enum: ["REST", "Auth", "GraphQL", "AI/ML", "3rd Party"], 
     default: "REST" 
   },
   operations: [
     {
       type: String,
-      enum: ["GET", "POST", "PUT", "PATCH", "DELETE"]
+      enum: ["GET", "POST", "PUT", "PATCH", "DELETE"] 
     }
   ],
   endpoints: [

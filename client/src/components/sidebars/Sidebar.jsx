@@ -155,7 +155,7 @@ const Sidebar = () => {
     if (!window.confirm("Are you sure you want to delete this API?")) return;
 
     try {
-      url = `http://localhost:3000/api/workspace/${id}`
+      url = `http://localhost:3000/api/workspace/${id}`;
 
       await fetch(url, {
         method: "DELETE",
@@ -169,11 +169,10 @@ const Sidebar = () => {
   };
 
   const handleSearch = async (query) => {
-  const res = await fetch(`http://localhost:3000/api/search/${query}`);
-  const data = await res.json();
-  setWorkspaceItems(data);
-};
-
+    const res = await fetch(`http://localhost:3000/api/search/${query}`);
+    const data = await res.json();
+    setWorkspaceItems(data);
+  };
 
   return (
     <>
@@ -253,7 +252,7 @@ const Sidebar = () => {
               </label>
               <ul className="cursor-pointer space-y-2 m-5 overflow-auto">
                 {workspaceItems.length > 0 &&
-                  workspaceItems.map((item, i) => {
+                  workspaceItems.map((item, i) => (
                     <li
                       key={item._id}
                       onClick={() => setPreviewText(item.code)}
@@ -270,17 +269,18 @@ const Sidebar = () => {
                         >
                           Update
                         </button>
-                        <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDelete(item._id);
-                        }}
-                        className="bg-blue-400 rounded-md px-1 hover:bg-blue-300">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item._id);
+                          }}
+                          className="bg-blue-400 rounded-md px-1 hover:bg-blue-300"
+                        >
                           Delete
                         </button>
                       </div>
-                    </li>;
-                  })}
+                    </li>
+                  ))}
               </ul>
             </div>
           </>
@@ -451,7 +451,7 @@ const Sidebar = () => {
               <label className="flex justify-start ml-3"> Your history</label>
               <ul className="cursor-pointer space-y-2 m-5 overflow-auto">
                 {historyItems.length > 0 &&
-                  historyItems.map((entry, i) => {
+                  historyItems.map((entry, i) => (
                     <li
                       key={i}
                       onClick={() =>
@@ -463,8 +463,8 @@ const Sidebar = () => {
                       <span className="text-xs">
                         {new Date(entry.timestamp).toLocaleString()}
                       </span>
-                    </li>;
-                  })}
+                    </li>
+                  ))}
               </ul>
             </div>
           </>

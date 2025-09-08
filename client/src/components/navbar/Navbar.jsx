@@ -3,16 +3,18 @@ import MobileNav from "./MobileNav";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Bell, FileUp, Search, Settings, User } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ selectedApiId }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isActive, setIsActive] = useState(false);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
+    // Example: Reset items after 2 seconds (optional)
+    const timeout = setTimeout(() => {
       setItems([]);
     }, 2000);
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -43,10 +45,7 @@ const Navbar = () => {
           <a href="#" className="text-gray-300 hover:text-gray-400">
             Home
           </a>
-          <a href="#" className="text-gray-300 hover:text-gray-400">
-            WorkSpace
-          </a>
-          <a href="#" className="text-gray-300 hover:text-gray-400">
+          <a href="https://www.postman.com/" className="text-gray-300 hover:text-gray-400">
             Test Your APIs
           </a>
         </div>
@@ -54,7 +53,7 @@ const Navbar = () => {
         {/* Search Bar For Large Screens */}
         <div
           onClick={OpenSearchTab}
-          className="hidden md:flex items-center bg-[#222c3d] rounded-full px-3 py-1 w-25%"
+          className="hidden md:flex items-center bg-[#222c3d] rounded-full px-3 py-1 w-1/4"
         >
           <Search className="w-4 h-4 text-gray-400" />
           <input
@@ -65,7 +64,7 @@ const Navbar = () => {
         </div>
 
         {/* Right part */}
-        <div className="hidden md:flex ">
+        <div className="hidden md:flex">
           <div className="flex space-x-6 sm:space-x-1 md:space-x-3 lg:space-x-5 mr-4">
             <div className="mt-1 bg-gray-600 hover:bg-gray-500 py-2 px-5 rounded-md">
               <Settings />
@@ -77,16 +76,14 @@ const Navbar = () => {
               <User />
             </div>
 
-            <div className="bg-gray-600 hover:bg-gray-500 rounded-md p-0.5 flex ">
+            <div className="bg-gray-600 hover:bg-gray-500 rounded-md p-0.5 flex">
               <button
                 onClick={() => {
                   if (!selectedApiId) {
                     alert("Please select an API from workspace first!");
                     return;
                   }
-                  window.open(
-                    `http://localhost:3000/api/export/${selectedApiId}`
-                  );
+                  window.open(`http://localhost:3000/api/export/${selectedApiId}`);
                 }}
                 type="button"
                 className="flex gap-1 px-2 py-2"
@@ -104,16 +101,20 @@ const Navbar = () => {
         )}
       </div>
 
+      {/* Search dropdown */}
       {isActive && (
-        <div className="hidden md:flex fixed bg-gray-800 w-full mx-18 z-11 h-48 max-h-50 overflow-y-auto overflow-x-auto rounded-xl">
+        <div className="md:flex fixed bg-gray-800 w-full z-10 h-48 max-h-50 overflow-y-auto overflow-x-auto rounded-xl">
           <span className="m-5">
             <ul className="cursor-pointer space-y-2">
-              {items.lengh > 0 &&
-                items.map(() => (
-                  <li className=" p-2 rounded-md pr-250 hover:bg-gray-600">
-                    {items}
+              {items.length > 0 ? (
+                items.map((item, index) => (
+                  <li key={index} className="p-2 rounded-md pr-20 hover:bg-gray-600">
+                    {item}
                   </li>
-                ))}
+                ))
+              ) : (
+                <li className="p-2 text-gray-400">No items found</li>
+              )}
             </ul>
           </span>
         </div>
