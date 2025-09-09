@@ -181,30 +181,34 @@ exports.deleteApi = async (req, res) => {
   }
 };
 
-//Export the API
+// Export API as a downloadable file
 exports.exportApi = async (req, res) => {
   try {
-    const api = await Api.findById(req.params.id);
-    if (!api) return res.status(404).json({ error: "API not found" });
+    const { id } = req.params;
+    const api = await Api.findById(id);
 
-    const fileName = `${api.name.replace(/\s+/g, "_")}.js`;
-    const filePath = path.join(__dirname, "../../tmp", fileName);
+    if (!api) {
+      return res.status(404).json({ error: "API not found" });
+    }
 
-    fs.writeFileSync(filePath, api.code, "utf8");
-
-    res.download(filePath, fileName, (err) => {
-      if (err) console.error(err);
-      fs.unlinkSync(filePath); // cleanup temp file
-    });
+    // Send the API code as a file
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${api.name.replace(/\s+/g, "_")}.js`
+    );
+    res.setHeader("Content-Type", "application/javascript");
+    res.send(api.code);
   } catch (err) {
-    res.status(500).json({ error: "Error exporting API" });
+    console.error(err);
+    res.status(500).json({ error: "Export failed" });
   }
 };
+
 
 //Search the APIs
 exports.searchApis = async (req, res) => {
   try {
-    const regex = new RegExp(req.params.query, "i"); // case-insensitive
+    const regex = new RegExp(req.params.query, "i"); 
     const results = await Api.find({ name: { $regex: regex } });
     res.json(results);
   } catch (err) {

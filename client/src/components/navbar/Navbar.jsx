@@ -8,6 +8,7 @@ const Navbar = ({ selectedApiId }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isActive, setIsActive] = useState(false);
   const [items, setItems] = useState([]);
+  
 
   useEffect(() => {
     // Example: Reset items after 2 seconds (optional)
@@ -33,6 +34,30 @@ const Navbar = ({ selectedApiId }) => {
   const OpenSearchTab = () => {
     setIsActive(!isActive);
   };
+
+  const handleExport = async () => {
+  if (!selectedApiId) {
+    alert("Please select the API first");
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/export/${selectedApiId}`);
+    const blob = await res.blob();
+
+    // trigger download
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "api.js";  // or api.json depending on your export format
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } catch (err) {
+    console.error("Export failed:", err);
+  }
+};
+
 
   return (
     <>

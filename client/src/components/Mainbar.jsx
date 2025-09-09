@@ -13,6 +13,7 @@ const Mainbar = ({
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
 
+
   const handleCopy = () => {
     navigator.clipboard
       .writeText(previewText)
@@ -101,7 +102,7 @@ const Mainbar = ({
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className="bg-purple-500 hover:bg-purple-400 flex justify-center px-15 py-2 rounded-md mx-auto"
+            className="bg-purple-500 hover:bg-purple-400 flex justify-center px-15 py-2 rounded-md mx-auto items-center"
           >
             <Zap />
             <span>{loading ? "Generating..." : "Generate API"}</span>

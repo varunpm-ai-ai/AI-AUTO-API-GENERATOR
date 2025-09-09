@@ -27,7 +27,7 @@ const OperationTypes = [
   { firstName2: "DELETE", id: 10 },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({setSelectedApiId}) => {
   const [active, setActive] = useState(false);
   const [apiTypes, setAPiTypes] = useState(false);
   const [oprations, setOprations] = useState(false);
@@ -38,13 +38,14 @@ const Sidebar = () => {
   const [filteredUsers2, setFilteredUsers2] = useState(OperationTypes);
   const [items, setItems] = useState([]);
   const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [historyItems, setHistoryitems] = useState([]);
+  const [historyItems, setHistoryItems] = useState([]);
   const [previewText, setPreviewText] = useState("API");
   const [selectedType, setSelectedType] = useState("REST");
   const [selectedOps, setSelectedOps] = useState([]);
   const [customEndpoints, setCustomEndpoints] = useState([]);
   const [aiDecide, setAiDecide] = useState(false);
   // const [selectedApiId, setSelectedApiId] = useState(null);
+
 
   const isAnyActive = active || apiTypes || oprations || endPoints || history;
 
@@ -56,7 +57,7 @@ const Sidebar = () => {
 
     fetch("http://localhost:3000/history")
       .then((res) => res.json())
-      .then((data) => setHistoryitems(data))
+      .then((data) => setHistoryItems(data))
       .catch((error) => console.log(error));
   }, []);
 
@@ -133,7 +134,7 @@ const Sidebar = () => {
     if (!newName) return;
 
     try {
-      url = `http://localhost:3000/api/workspace/${id}`;
+      const url = `http://localhost:3000/api/workspace/${id}`;
 
       const res = await fetch(url, {
         method: "PUT",
@@ -144,9 +145,9 @@ const Sidebar = () => {
 
       // Update frontend list
       setWorkspaceItems((prev) =>
-        prev.map((item) => (item._id === id ? updated : item))
+        prev.map((item) => (item._id === id ? data : item))
       );
-    } catch (error) {
+    } catch (err) {
       console.error("Error updating:", err);
     }
   };
@@ -155,7 +156,7 @@ const Sidebar = () => {
     if (!window.confirm("Are you sure you want to delete this API?")) return;
 
     try {
-      url = `http://localhost:3000/api/workspace/${id}`;
+      const url = `http://localhost:3000/api/workspace/${id}`;
 
       await fetch(url, {
         method: "DELETE",
@@ -244,6 +245,7 @@ const Sidebar = () => {
                   type="text"
                   placeholder="Search your APIs here"
                   className="ml-2 w-full bg-transparent outline-none text-gray-300"
+                  onChange={(e) => handleSearch(e.target.value)}
                 />
               </div>
               <label className="flex justify-center text-[9px] sm:text-[9px] md:text-sm lg:text-md">
@@ -255,7 +257,10 @@ const Sidebar = () => {
                   workspaceItems.map((item, i) => (
                     <li
                       key={item._id}
-                      onClick={() => setPreviewText(item.code)}
+                      onClick={() => {
+                        setPreviewText(item.code);
+                        setSelectedApiId(item._id);
+                      }}
                       className="p-2 rounded-md bg-gray-600 hover:bg-gray-700 flex justify-between"
                     >
                       <span>{item.name || "Unnamed API"}</span>
@@ -481,7 +486,7 @@ const Sidebar = () => {
             setPreviewText={setPreviewText}
             onApiGenerated={(newApi, HistoryEntry) => {
               setWorkspaceItems((prev) => [...prev, newApi]);
-              setHistoryitems((prev) => [...prev, HistoryEntry]);
+              setHistoryItems((prev) => [...prev, HistoryEntry]);
             }}
             selectedType={selectedType}
             selectedOps={selectedOps}
