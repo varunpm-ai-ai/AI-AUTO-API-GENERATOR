@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MobileNav from "./MobileNav";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import { Bell, FileUp, Search, Settings, User } from "lucide-react";
+import { Download } from "lucide-react";
 
 const Navbar = ({ selectedApiId }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -76,7 +76,7 @@ const Navbar = ({ selectedApiId }) => {
         </div>
 
         {/* Search Bar For Large Screens */}
-        <div
+        {/* <div
           onClick={OpenSearchTab}
           className="hidden md:flex items-center bg-[#222c3d] rounded-full px-3 py-1 w-1/4"
         >
@@ -86,22 +86,22 @@ const Navbar = ({ selectedApiId }) => {
             placeholder="Search your APIs..."
             className="ml-2 w-full bg-transparent outline-none text-gray-300 placeholder-gray-500"
           />
-        </div>
+        </div> */}
 
         {/* Right part */}
         <div className="hidden md:flex">
           <div className="flex space-x-6 sm:space-x-1 md:space-x-3 lg:space-x-5 mr-4">
-            <div className="mt-1 bg-gray-600 hover:bg-gray-500 py-2 px-5 rounded-md">
+            {/* <div className="mt-1 bg-gray-600 hover:bg-gray-500 py-2 px-5 rounded-md">
               <Settings />
             </div>
             <div className="mt-1 bg-gray-600 hover:bg-gray-500 py-2 px-5 rounded-md">
               <Bell />
-            </div>
-            <div className="mt-1 bg-gray-600 hover:bg-gray-500 py-2 px-5 rounded-md">
+            </div> */}
+            {/* <div className="mt-1 bg-gray-600 hover:bg-gray-500 py-2 px-5 rounded-md">
               <User />
-            </div>
+            </div> */}
 
-            <div className="bg-gray-600 hover:bg-gray-500 rounded-md p-0.5 flex">
+            <div className="bg-gray-800 border border-gray-500 hover:bg-gray-900 rounded-md p-0.5 flex">
               <button
                 onClick={() => {
                   if (!selectedApiId) {
@@ -113,8 +113,8 @@ const Navbar = ({ selectedApiId }) => {
                 type="button"
                 className="flex gap-1 px-2 py-2"
               >
-                <FileUp />
-                Export
+                <Download />
+                Download API
               </button>
             </div>
           </div>

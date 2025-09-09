@@ -27,7 +27,7 @@ exports.generateAPI = async (req, res) => {
       Endpoints: ${JSON.stringify(endpoints || [{ path: "/", method: "GET" }])}
       Options: ${JSON.stringify(customOptions || {})}
       User Request: ${prompt}
-      Generate production-ready Node.js Express code for this API.
+      Generate production-ready API in json format.
     `;
 
     // Call Gemini
@@ -181,7 +181,7 @@ exports.deleteApi = async (req, res) => {
   }
 };
 
-// Export API as a downloadable file
+// Export API 
 exports.exportApi = async (req, res) => {
   try {
     const { id } = req.params;
