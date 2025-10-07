@@ -27,15 +27,14 @@ exports.generateAPI = async (req, res) => {
       Endpoints: ${JSON.stringify(endpoints || [{ path: "/", method: "GET" }])}
       Options: ${JSON.stringify(customOptions || {})}
       User Request: ${prompt}
-      Generate production-ready API in json format.
+      Generate production-ready API .
     `;
 
     // Call Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const result = await model.generateContent(fullPrompt);
     const generatedCode = result.response.text();
 
-    // Save API
     const newApi = new Api({
       name: name || prompt.slice(0, 30) || "Generated API",
       type: type || "REST",

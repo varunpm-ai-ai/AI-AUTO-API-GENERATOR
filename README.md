@@ -41,7 +41,7 @@ cd server
 npm install
 
 MONGO_URI=your_mongo_connection_string
-OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_openai_key
 PORT=3000
 
 npm run dev
@@ -53,12 +53,6 @@ npm start
 
 
 Screen shots
-![Main](./screenshots/image.png)
-![Workspace](./screenshots/image-1.png)
-![API Types](./screenshots/image-2.png)
-![Operetion types](./screenshots/image-3.png)
-![Custom Endpoints](./screenshots/image-4.png)
-![History](./screenshots/image-5.png)
 
 
  API Routes
