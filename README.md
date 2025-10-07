@@ -53,7 +53,7 @@ npm start
 
 
 Screen shots
-![API Screenshot](https://raw.githubusercontent.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/main/screenshots/image1.png)
+![image alt](https://github.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/blob/main/Screenshot%202025-10-07%20151353.png?raw=true)
 
 
 
