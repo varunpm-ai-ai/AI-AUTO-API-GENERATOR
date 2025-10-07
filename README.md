@@ -42,9 +42,11 @@ The app provides a UI to generate APIs from prompts, manage them in a workspace,
 ```bash
 git clone https://github.com/your-username/ai-auto-api-generator.git
 cd ai-auto-api-generator
+```
 
 
 ### 2. Backend Setup
+```bash
 cd server
 npm install
 
@@ -53,11 +55,14 @@ GEMINI_API_KEY=your_openai_key
 PORT=3000
 
 npm run dev
+````
 
 ### 3. Frontend Setup
+```bash
 cd client
 npm install
 npm start
+```
 
 
 
@@ -92,11 +97,4 @@ Pull requests are welcome. For major changes, open an issue first.
 
 
 MIT License
-
----
-
-This will make your repo look **professional and complete**.  
-You can also add badges (e.g. for Node.js, React, MongoDB, license) at the top for polish.  
-
-👉 Do you want me to also generate a **README with badges + emojis style** (like a “GitHub trending” project look)?
 
