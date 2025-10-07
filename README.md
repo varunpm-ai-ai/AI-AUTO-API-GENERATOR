@@ -53,7 +53,7 @@ npm start
 
 
 Screen shots
-![image alt](https://raw.githubusercontent.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/refs/heads/main/screenshots/image1.png)
+![image alt](https://raw.githubusercontent.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/main/screenshots/image1.png)
 
 
  API Routes
