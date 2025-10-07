@@ -1,6 +1,9 @@
 # AI-AUTO-API-GENERATOR
 Using AI to Create APIs to save production time 
 
+Screen shots
+![image alt](https://github.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/blob/main/Screenshot%202025-10-07%20151353.png?raw=true)
+
 # 🚀 AI Auto API Generator
 
 A full-stack **AI-powered API generator** that lets you create, manage, and export backend APIs using OpenAI + Node.js + MongoDB.  
@@ -50,10 +53,6 @@ npm run dev
 cd client
 npm install
 npm start
-
-
-Screen shots
-![image alt](https://github.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/blob/main/Screenshot%202025-10-07%20151353.png?raw=true)
 
 
 
