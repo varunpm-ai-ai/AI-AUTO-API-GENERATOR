@@ -1,5 +1,5 @@
 // const OpenAI = require("openai");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenAI  } = require("@google/genai");
 const Api = require("../models/ApiSpec");
 const History = require('../models/History');
 const path = require("path");
@@ -8,7 +8,7 @@ const fs = require("fs");
 require("dotenv").config();
 
 // Gemini API key
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenAI (process.env.GEMINI_API_KEY);
 
 // Generate a new api 
 exports.generateAPI = async (req, res) => {
@@ -31,9 +31,13 @@ exports.generateAPI = async (req, res) => {
     `;
 
     // Call Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContent(fullPrompt);
-    const generatedCode = result.response.text();
+    const response = await genAI.models.generateContent(
+      {
+        model: "gemini-2.5-flash",
+        contents: fullPrompt,
+      }
+    );
+    const generatedCode = response.text;
 
     const newApi = new Api({
       name: name || prompt.slice(0, 30) || "Generated API",
