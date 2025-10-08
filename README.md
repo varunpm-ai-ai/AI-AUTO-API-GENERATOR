@@ -1,7 +1,8 @@
 # AI-AUTO-API-GENERATOR
 Using AI to Create APIs to save production time 
 
-Screen shots
+### Screen shots
+
 ![image alt](https://github.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/blob/main/Screenshot%202025-10-07%20151353.png?raw=true)
 <div align="center">
  <img src="https://github.com/varunpm-ai-ai/AI-AUTO-API-GENERATOR/blob/main/Screenshot%202025-10-08%20175247.png?raw=true" alt="img1" width="100"  />
