@@ -10,7 +10,6 @@ require("dotenv").config();
 // Gemini API key
 const genAI = new GoogleGenAI (process.env.GEMINI_API_KEY);
 
-// Generate a new api 
 exports.generateAPI = async (req, res) => {
   try {
     const { name, type, operations, endpoints, customOptions, code, prompt } = req.body || {};
@@ -19,7 +18,7 @@ exports.generateAPI = async (req, res) => {
       return res.status(400).json({ error: "Prompt is required" });
     }
 
-    // Build prompt for Gemini
+    // Prompt
     const fullPrompt = `
       You are an API generator.
       Type: ${type || "REST"}
@@ -30,7 +29,6 @@ exports.generateAPI = async (req, res) => {
       Generate production-ready API .
     `;
 
-    // Call Gemini
     const response = await genAI.models.generateContent(
       {
         model: "gemini-2.5-flash",
@@ -49,7 +47,6 @@ exports.generateAPI = async (req, res) => {
     });
     await newApi.save();
 
-    // Save history
     const historyEntry = new History({
       apiId: newApi._id,
       prompt,
@@ -57,7 +54,6 @@ exports.generateAPI = async (req, res) => {
     });
     await historyEntry.save();
 
-    // Send final response
     return res.status(200).json({ api: newApi, history: historyEntry });
 
   } catch (error) {
