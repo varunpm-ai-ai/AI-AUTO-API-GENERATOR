@@ -1,0 +1,36 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "API Gateway Microservice - Edge Entry Boundary for AI Auto API Generator",
+  "keywords": [
+    "api-gateway",
+    "microservice",
+    "rate-limiting",
+    "authentication",
+    "proxy",
+    "reverse-proxy"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node --test tests/gateway.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "debug": "^4.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.0",
+    "morgan": "^1.10.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
