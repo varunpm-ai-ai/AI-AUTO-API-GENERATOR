@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: dataset-catalog-service
+Version: 1.0.0
+Summary: Dataset Catalog Service for AI Auto API Generator
+Author: AI Auto API Generator Team
+Requires-Python: >=3.10
+Requires-Dist: fastapi>=0.110.0
+Requires-Dist: uvicorn>=0.28.0
+Requires-Dist: pydantic>=2.6.0
+Requires-Dist: pydantic-settings>=2.2.0
+Requires-Dist: sqlalchemy[asyncio]>=2.0.28
+Requires-Dist: asyncpg>=0.29.0
+Requires-Dist: aiosqlite>=0.20.0
+Requires-Dist: redis>=5.0.3
+Requires-Dist: aiokafka>=0.10.0
+Requires-Dist: aio-pika>=9.4.1
+Requires-Dist: grpcio>=1.62.1
+Requires-Dist: grpcio-tools>=1.62.1
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: httpx>=0.27.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.1.1; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23.6; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"

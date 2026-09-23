@@ -1,0 +1,38 @@
+[project]
+name = "dataset-catalog-service"
+version = "1.0.0"
+description = "Dataset Catalog Service for AI Auto API Generator"
+authors = [{ name = "AI Auto API Generator Team" }]
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.28.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+    "sqlalchemy[asyncio]>=2.0.28",
+    "asyncpg>=0.29.0",
+    "aiosqlite>=0.20.0",
+    "redis>=5.0.3",
+    "aiokafka>=0.10.0",
+    "aio-pika>=9.4.1",
+    "grpcio>=1.62.1",
+    "grpcio-tools>=1.62.1",
+    "python-dotenv>=1.0.1",
+    "httpx>=0.27.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.1.1",
+    "pytest-asyncio>=0.23.6",
+    "pytest-cov>=4.1.0"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = "test_*.py"

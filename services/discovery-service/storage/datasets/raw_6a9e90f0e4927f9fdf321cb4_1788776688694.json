@@ -1,0 +1,18 @@
+{
+  "request_id": "6a9e90f0e4927f9fdf321cb4",
+  "query": "global climate temperature data",
+  "source_url": "https://data.gov/api/v1/datasets?query=global%20climate%20temperature%20data",
+  "acquired_at": "2026-09-07T10:24:48.693Z",
+  "sample_records": [
+    {
+      "id": 1,
+      "name": "Sample Dataset Item A",
+      "value": 100
+    },
+    {
+      "id": 2,
+      "name": "Sample Dataset Item B",
+      "value": 200
+    }
+  ]
+}

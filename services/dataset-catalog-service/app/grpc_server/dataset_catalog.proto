@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package dataset_catalog;
+
+service DatasetCatalogService {
+  rpc RegisterDataset (RegisterDatasetRequest) returns (DatasetDetailResponse);
+  rpc GetDataset (GetDatasetRequest) returns (DatasetDetailResponse);
+  rpc ListDatasets (ListDatasetsRequest) returns (ListDatasetsResponse);
+  rpc GetVersionStatus (GetVersionStatusRequest) returns (VersionStatusResponse);
+  rpc ResolveIdentity (ResolveIdentityRequest) returns (ResolveIdentityResponse);
+  rpc CheckDuplicate (CheckDuplicateRequest) returns (CheckDuplicateResponse);
+}
+
+message RegisterDatasetRequest {
+  string name = 1;
+  string description = 2;
+  string domain = 3;
+  string source = 4;
+  string checksum = 5;
+  string storage_ref = 6;
+  string storage_type = 7;
+  int64 file_size = 8;
+}
+
+message VersionMessage {
+  string version_id = 1;
+  string dataset_id = 2;
+  int32 version_number = 3;
+  string checksum = 4;
+  string storage_ref = 5;
+  string status = 6;
+  string created_at = 7;
+}
+
+message DatasetDetailResponse {
+  string dataset_id = 1;
+  string name = 2;
+  string description = 3;
+  string domain = 4;
+  string source = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  repeated VersionMessage versions = 8;
+}
+
+message GetDatasetRequest {
+  string dataset_id = 1;
+}
+
+message ListDatasetsRequest {
+  string name = 1;
+  string domain = 2;
+  string source = 3;
+  int32 page = 4;
+  int32 limit = 5;
+}
+
+message DatasetSummaryMessage {
+  string dataset_id = 1;
+  string name = 2;
+  string description = 3;
+  string domain = 4;
+  string source = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message ListDatasetsResponse {
+  repeated DatasetSummaryMessage datasets = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+  int32 total_pages = 5;
+}
+
+message GetVersionStatusRequest {
+  string dataset_id = 1;
+  string version_id = 2;
+}
+
+message StatusHistoryItem {
+  string status_id = 1;
+  string state = 2;
+  string error_message = 3;
+  string processed_at = 4;
+}
+
+message VersionStatusResponse {
+  string version_id = 1;
+  string current_status = 2;
+  repeated StatusHistoryItem history = 3;
+}
+
+message ResolveIdentityRequest {
+  string name = 1;
+  string source = 2;
+  string domain = 3;
+}
+
+message ResolveIdentityResponse {
+  bool is_existing = 1;
+  string dataset_id = 2;
+  string matched_by = 3;
+}
+
+message CheckDuplicateRequest {
+  string checksum = 1;
+  string storage_ref = 2;
+}
+
+message CheckDuplicateResponse {
+  bool is_duplicate = 1;
+  string existing_dataset_id = 2;
+  string existing_version_id = 3;
+  string matched_checksum = 4;
+}
