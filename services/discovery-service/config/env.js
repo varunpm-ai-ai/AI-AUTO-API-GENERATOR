@@ -11,6 +11,7 @@ const envSchema = z.object({
   GEMINI_API_KEY: z.string().optional().default(''),
   GEMINI_MODEL: z.string().default('gemini-2.5-flash'),
   OBJECT_STORAGE_BASE_PATH: z.string().default('./storage/datasets'),
+  CATALOG_GRPC_HOST: z.string().default('localhost:50053'),
   RATE_LIMIT_WINDOW_MS: z.string().default('900000').transform((val) => parseInt(val, 10)),
   RATE_LIMIT_MAX: z.string().default('100').transform((val) => parseInt(val, 10))
 });

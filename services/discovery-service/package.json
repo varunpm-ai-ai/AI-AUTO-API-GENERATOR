@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
+    "@grpc/grpc-js": "^1.14.7",
+    "@grpc/proto-loader": "^0.8.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

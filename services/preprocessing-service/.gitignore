@@ -1,0 +1,21 @@
+# Virtual Environments
+.venv/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Testing Cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local & Scratch Data
+tmp/
+.env

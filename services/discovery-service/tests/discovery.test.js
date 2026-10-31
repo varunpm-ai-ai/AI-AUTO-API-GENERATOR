@@ -5,6 +5,7 @@ const test = require('node:test');
 const assert = require('node:assert');
 
 const app = require('../index');
+const catalogGrpcClient = require('../grpc/catalogClient');
 
 test('Discovery Service Endpoints & Workflow', async (t) => {
   let server;
@@ -41,7 +42,18 @@ test('Discovery Service Endpoints & Workflow', async (t) => {
     assert.ok(body.data.acquiredDatasetId, 'Acquired Dataset ID should be present');
   });
 
+  await t.test('Catalog gRPC client handles offline server gracefully with fallback', async () => {
+    const dupRes = await catalogGrpcClient.checkDuplicate('dummy-sha256-hash', '', 300);
+    assert.strictEqual(dupRes.is_duplicate, false);
+    assert.strictEqual(dupRes.fallback, true);
+
+    const idRes = await catalogGrpcClient.resolveIdentity('NonExistent', '', '', 300);
+    assert.strictEqual(idRes.is_existing, false);
+    assert.strictEqual(idRes.fallback, true);
+  });
+
   await t.test('Close test server instance', () => {
+    catalogGrpcClient.close();
     return new Promise((resolve) => {
       server.close(resolve);
     });

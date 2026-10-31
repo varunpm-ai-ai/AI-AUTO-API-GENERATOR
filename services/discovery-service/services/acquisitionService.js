@@ -10,6 +10,7 @@ const config = require('../config/env');
 const logger = require('../config/logger');
 const AcquiredDataset = require('../models/AcquiredDataset');
 const outboxPublisherService = require('./outboxPublisherService');
+const catalogGrpcClient = require('../grpc/catalogClient');
 
 class AcquisitionService {
   async acquire(discoveryRequest, crawlJob) {
@@ -28,6 +29,12 @@ class AcquisitionService {
     const storageKey = `raw_${discoveryRequest._id}_${Date.now()}.json`;
     const storageDir = path.resolve(config.OBJECT_STORAGE_BASE_PATH);
     const storagePath = path.join(storageDir, storageKey);
+
+    // Synchronous Plane 1 Control Check via gRPC (Catalog Deduplication)
+    const duplicateCheck = await catalogGrpcClient.checkDuplicate(checksum, `s3://ai-discovery-datasets/${storageKey}`);
+    if (duplicateCheck && duplicateCheck.is_duplicate) {
+      logger.info(`gRPC Catalog check: duplicate dataset found (Existing ID: ${duplicateCheck.existing_dataset_id}, Version: ${duplicateCheck.existing_version_id})`);
+    }
 
     try {
       fs.mkdirSync(storageDir, { recursive: true });
