@@ -17,6 +17,10 @@ class ProxyRoutingService {
     // Default static downstream service mappings fallback
     this.defaultRoutes = [
       {
+        pathPrefix: '/api/v1/auth',
+        targetBaseUrl: config.AUTH_SERVICE_URL
+      },
+      {
         pathPrefix: '/api/v1/discover',
         targetBaseUrl: config.DISCOVERY_SERVICE_URL
       },

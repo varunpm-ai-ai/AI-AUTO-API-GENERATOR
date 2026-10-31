@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  // Validates a JWT or session token synchronously
+  rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse);
+
+  // Retrieves user profile by user_id
+  rpc GetUser (GetUserRequest) returns (UserResponse);
+
+  // Verifies user membership and role within a tenant boundary
+  rpc VerifyTenantAccess (VerifyTenantAccessRequest) returns (VerifyTenantAccessResponse);
+
+  // Retrieves tenant metadata by tenant_id
+  rpc GetTenant (GetTenantRequest) returns (TenantResponse);
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+message ValidateTokenResponse {
+  bool is_valid = 1;
+  string user_id = 2;
+  string tenant_id = 3;
+  string email = 4;
+  repeated string roles = 5;
+  string error_message = 6;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message UserResponse {
+  bool found = 1;
+  string user_id = 2;
+  string tenant_id = 3;
+  string email = 4;
+  string name = 5;
+  string role = 6;
+  string status = 7;
+}
+
+message VerifyTenantAccessRequest {
+  string user_id = 1;
+  string tenant_id = 2;
+  string required_role = 3;
+}
+
+message VerifyTenantAccessResponse {
+  bool has_access = 1;
+  string reason = 2;
+}
+
+message GetTenantRequest {
+  string tenant_id = 1;
+}
+
+message TenantResponse {
+  bool found = 1;
+  string tenant_id = 2;
+  string name = 3;
+  string slug = 4;
+  string plan = 5;
+  string status = 6;
+}

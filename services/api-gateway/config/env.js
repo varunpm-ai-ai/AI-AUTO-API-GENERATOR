@@ -11,6 +11,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().default('super_secret_gateway_jwt_key_2026_change_in_production'),
   JWT_EXPIRES_IN: z.string().default('7d'),
   API_KEY_SALT: z.string().default('gateway_secure_salt_key_98765'),
+  AUTH_SERVICE_URL: z.string().default('http://localhost:5000'),
   DISCOVERY_SERVICE_URL: z.string().default('http://localhost:5001'),
   WORKSPACE_SERVICE_URL: z.string().default('http://localhost:5002'),
   GATEWAY_PREFIX: z.string().default('/api/v1/gateway'),
